@@ -232,15 +232,18 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * 
 	 */
 	public int size() {
-		throw new UnsupportedOperationException();
+		return size(this);
+	}
 
-        /*
-         * this will be implemented using recursion by counting the
-         * nodes with roots, if the root does not have a root, then
-         * we hit the base case and return
-         */
-        
+	private int size(BinaryTree<E> root) {
+        if(root == null){
+			return 0;
+		} 
+		else{
+			return 1 + size(root.getLeftSubtree()) + size(root.getRightSubtree());
+		}
 	} // method size()
+
 
 	/**
 	 * Returns the number of interior nodes in the tree.
@@ -249,7 +252,16 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return The number of interior nodes in the tree
 	 */
 	public int interiorNodes() {
-		throw new UnsupportedOperationException();
+		return interiorNodes(this);
+	}
+	
+	private int interiorNodes(BinaryTree<E> root){
+		if(root.isLeaf()){
+			return 0;
+		}
+		else{
+			return 1 + interiorNodes(root.getLeftSubtree()) + interiorNodes(root.getRightSubtree());
+		}
 	}
 
 
@@ -259,7 +271,19 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return the number of leaves in the tree
 	 */
 	public int leaves() {
-		throw new UnsupportedOperationException();
+		return leaves(this);
+	}
+
+	private int leaves(BinaryTree<E> root){
+		if(root == null){
+			return 0;
+		}
+		else if(root.isLeaf()){
+			return 1;
+		}else{
+			return leaves(root.getLeftSubtree()) + leaves(root.getRightSubtree());
+		}
+	
 	}
 
 	/**
@@ -269,6 +293,11 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return returns the height of the tree
 	 */
 	public int height() {
+		return height(this);
+	}
+
+	private int height(BinaryTree<E> root){
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 
@@ -280,6 +309,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an preorder traversal of the tree
 	 */
 	public String preorder() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 	
@@ -289,6 +319,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an inorder traversal of the tree
 	 */
 	public String inorder() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 
@@ -298,6 +329,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a postorder traversal of the tree
 	 */
 	public String postorder() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 	
@@ -307,6 +339,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a breadth-first order traversal of the tree
 	 */
 	public String breadthFirstOrder() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 	
@@ -316,6 +349,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return smallest element or null if the tree is empty.
 	 */
 	public E findMin() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 
@@ -325,6 +359,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return the largest item or null if the tree is empty.
 	 */
 	public E findMax() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 	
@@ -340,7 +375,8 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a parenthesized string representing structure of BST tree
 	 */
 	public String toString( ) { 
-		 throw new UnsupportedOperationException();
+		//TODO 
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -351,6 +387,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 *             if the tree is empty
 	 */
 	public boolean removeMin() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 
@@ -362,6 +399,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 *             if the tree is empty
 	 */
 	public boolean removeMax() {
+		//TODO
 		throw new UnsupportedOperationException();
 	}
 
