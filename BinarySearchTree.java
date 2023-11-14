@@ -233,6 +233,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 */
 	public int size() {
 		throw new UnsupportedOperationException();
+
+        /*
+         * this will be implemented using recursion by counting the
+         * nodes with roots, if the root does not have a root, then
+         * we hit the base case and return
+         */
+        
 	} // method size()
 
 	/**
