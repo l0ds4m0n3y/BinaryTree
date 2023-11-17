@@ -236,10 +236,10 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	}
 
 	private int size(BinaryTree<E> root) {
-        if(root == null){
+		if(root == null || root.root == null){
 			return 0;
 		} 
-		else{
+		else {
 			return 1 + size(root.getLeftSubtree()) + size(root.getRightSubtree());
 		}
 	} // method size()
@@ -256,7 +256,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	}
 	
 	private int interiorNodes(BinaryTree<E> root){
-		if(root.isLeaf()){
+		if(root.getLeftSubtree() == null || root.getRightSubtree() == null){
 			return 0;
 		}
 		else{
@@ -275,7 +275,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	}
 
 	private int leaves(BinaryTree<E> root){
-		if(root == null){
+		if(root == null || root.root == null){
 			return 0;
 		}
 		else if(root.isLeaf()){
@@ -297,11 +297,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	}
 
 	private int height(BinaryTree<E> root){
-		//TODO
-		throw new UnsupportedOperationException();
+		if(root == null){
+			return 0;
+		}else{
+			return Math.max(height(root.getLeftSubtree()), height(root.getRightSubtree())) + 1;
+		}
 	}
-
-
 
 	/**
 	 * Returns a preorder String of tree elements.
@@ -309,8 +310,20 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an preorder traversal of the tree
 	 */
 	public String preorder() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return preorder(this);
+	}
+
+	private String preorder(BinaryTree<E> root){
+		if(root == null){
+			return "";
+		}
+		else{
+			String left = inorder(root.getLeftSubtree());
+			String current = root.getData().toString();
+			String right = inorder(root.getRightSubtree());
+
+			return current + " " + left + right;
+		}
 	}
 	
 	/**
@@ -319,8 +332,19 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an inorder traversal of the tree
 	 */
 	public String inorder() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return inorder(this);
+	}
+
+	public String inorder(BinaryTree<E> root){
+		if(root == null){
+			return "";
+		} else{
+			String left = inorder(root.getLeftSubtree());
+			String current = root.getData().toString();
+			String right = inorder(root.getRightSubtree());
+
+			return left + current + " " + right;
+		}
 	}
 
 	/**
@@ -329,8 +353,19 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a postorder traversal of the tree
 	 */
 	public String postorder() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return postorder(this);
+	}
+
+	private String postorder(BinaryTree<E> root){
+		if(root == null){
+			return "";
+		} else{
+			String left = inorder(root.getLeftSubtree());
+			String current = root.getData().toString();
+			String right = inorder(root.getRightSubtree());
+
+			return left + current + " " + right;
+		}
 	}
 	
 	/**
@@ -349,8 +384,15 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return smallest element or null if the tree is empty.
 	 */
 	public E findMin() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return findMin(this);
+	}
+
+	private E findMin(BinaryTree<E> root){
+		if(root.getLeftSubtree() == null){
+			return root.getData();
+		}else{
+			return findMin(root.getLeftSubtree());
+		}
 	}
 
 	/**
@@ -359,8 +401,15 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return the largest item or null if the tree is empty.
 	 */
 	public E findMax() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return findMax(this);
+	}
+
+	private E findMax(BinaryTree<E> root){
+		if(root.getRightSubtree() == null){
+			return root.getData();
+		}else{
+			return findMax(root.getRightSubtree());
+		}
 	}
 	
 	/**
@@ -387,8 +436,11 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 *             if the tree is empty
 	 */
 	public boolean removeMin() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return removeMin(this);
+	}
+
+	private boolean removeMin(BinaryTree<E> root){
+		return false;
 	}
 
 	/**
