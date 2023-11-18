@@ -5,7 +5,9 @@ public class Main {
         for(int s : array){
             myTree.add(s);
         }
-        //TODO preorder and post order needs work 
+
+        System.out.println(myTree.inorder());
+        System.out.println(myTree.preorder()); 
         System.out.println(myTree.postorder());
     }    
 }

@@ -232,17 +232,16 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * 
 	 */
 	public int size() {
-		return size(this);
+		return size(root);
 	}
 
-	private int size(BinaryTree<E> root) {
-		if(root == null || root.root == null){
+	private int size(Node<E> root){
+		if(root == null){
 			return 0;
-		} 
-		else {
-			return 1 + size(root.getLeftSubtree()) + size(root.getRightSubtree());
+		} else{
+			return 1 + size(root.left) + size(root.right);
 		}
-	} // method size()
+	}
 
 
 	/**
@@ -252,15 +251,15 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return The number of interior nodes in the tree
 	 */
 	public int interiorNodes() {
-		return interiorNodes(this);
+		return interiorNodes(root);
 	}
-	
-	private int interiorNodes(BinaryTree<E> root){
-		if(root.getLeftSubtree() == null || root.getRightSubtree() == null){
+
+	private int interiorNodes(Node<E> root){
+		if(root.left == null || root.right == null){
 			return 0;
 		}
 		else{
-			return 1 + interiorNodes(root.getLeftSubtree()) + interiorNodes(root.getRightSubtree());
+			return 1 + interiorNodes(root.left) + interiorNodes(root.right);
 		}
 	}
 
@@ -271,19 +270,18 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return the number of leaves in the tree
 	 */
 	public int leaves() {
-		return leaves(this);
+		return leaves(root);
 	}
 
-	private int leaves(BinaryTree<E> root){
-		if(root == null || root.root == null){
+	private int leaves(Node<E> root){
+		if(root == null){
 			return 0;
 		}
-		else if(root.isLeaf()){
+		else if(root.left == null && root.right == null){
 			return 1;
 		}else{
-			return leaves(root.getLeftSubtree()) + leaves(root.getRightSubtree());
+			return leaves(root.left) + leaves(root.right);
 		}
-	
 	}
 
 	/**
@@ -293,14 +291,14 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return returns the height of the tree
 	 */
 	public int height() {
-		return height(this);
+		return height(root);
 	}
 
-	private int height(BinaryTree<E> root){
+	private int height(Node<E> root){
 		if(root == null){
 			return 0;
 		}else{
-			return Math.max(height(root.getLeftSubtree()), height(root.getRightSubtree())) + 1;
+			return Math.max(height(root.left), height(root.right)) + 1;
 		}
 	}
 
@@ -318,9 +316,9 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 			return "";
 		}
 		else{
-			String left = inorder(root.getLeftSubtree());
+			String left = preorder(root.getLeftSubtree());
 			String current = root.getData().toString();
-			String right = inorder(root.getRightSubtree());
+			String right = preorder(root.getRightSubtree());
 
 			return current + " " + left + right;
 		}
@@ -332,16 +330,16 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an inorder traversal of the tree
 	 */
 	public String inorder() {
-		return inorder(this);
+		return inorder(root);
 	}
 
-	public String inorder(BinaryTree<E> root){
+	public String inorder(Node<E> root){
 		if(root == null){
 			return "";
 		} else{
-			String left = inorder(root.getLeftSubtree());
-			String current = root.getData().toString();
-			String right = inorder(root.getRightSubtree());
+			String left = inorder(root.left);
+			String current = root.toString();
+			String right = inorder(root.right);
 
 			return left + current + " " + right;
 		}
@@ -360,11 +358,11 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		if(root == null){
 			return "";
 		} else{
-			String left = inorder(root.getLeftSubtree());
+			String left = postorder(root.getLeftSubtree());
 			String current = root.getData().toString();
-			String right = inorder(root.getRightSubtree());
+			String right = postorder(root.getRightSubtree());
 
-			return left + current + " " + right;
+			return left + right + current + " ";
 		}
 	}
 	
