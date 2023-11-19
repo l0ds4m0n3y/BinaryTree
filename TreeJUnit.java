@@ -54,7 +54,7 @@ public class TreeJUnit {
         assertEquals(3, myTree.interiorNodes());
 
         myTree.add(4);
-        // assertEquals(4, myTree.interiorNodes());
+        assertEquals(4, myTree.interiorNodes());
 
         myTree.add(2);
         assertEquals(4, myTree.interiorNodes());

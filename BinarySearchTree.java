@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
  * A class to represent a binary search tree.
@@ -255,7 +258,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	}
 
 	private int interiorNodes(Node<E> root){
-		if(root.left == null || root.right == null){
+		if(root == null || (root.left == null && root.right == null)){
 			return 0;
 		}
 		else{
@@ -308,17 +311,17 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a string with an preorder traversal of the tree
 	 */
 	public String preorder() {
-		return preorder(this);
+		return preorder(root);
 	}
 
-	private String preorder(BinaryTree<E> root){
+	private String preorder(Node<E> root){
 		if(root == null){
 			return "";
 		}
 		else{
-			String left = preorder(root.getLeftSubtree());
-			String current = root.getData().toString();
-			String right = preorder(root.getRightSubtree());
+			String left = preorder(root.left);
+			String current = root.toString();
+			String right = preorder(root.right);
 
 			return current + " " + left + right;
 		}
@@ -351,16 +354,16 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a postorder traversal of the tree
 	 */
 	public String postorder() {
-		return postorder(this);
+		return postorder(root);
 	}
 
-	private String postorder(BinaryTree<E> root){
+	private String postorder(Node<E> root){
 		if(root == null){
 			return "";
 		} else{
-			String left = postorder(root.getLeftSubtree());
-			String current = root.getData().toString();
-			String right = postorder(root.getRightSubtree());
+			String left = postorder(root.left);
+			String current = root.toString();
+			String right = postorder(root.right);
 
 			return left + right + current + " ";
 		}
@@ -372,8 +375,23 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a breadth-first order traversal of the tree
 	 */
 	public String breadthFirstOrder() {
-		//TODO
-		throw new UnsupportedOperationException();
+		Queue<Node<E>> myQueue = new LinkedList<>();
+		String output = "";
+		myQueue.offer(root);
+		while(!myQueue.isEmpty()){
+			Node<E> current = myQueue.poll();
+			output += current.toString() + " ";
+			if(current.left != null)
+				myQueue.offer(current.left);
+			if(current.right != null)
+				myQueue.offer(current.right);
+		}
+		return output;
+	}
+
+	private String breadthFirstOrder(Node<E> root){
+		int height = height();
+		return "";
 	}
 	
 	/**
@@ -382,14 +400,14 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return smallest element or null if the tree is empty.
 	 */
 	public E findMin() {
-		return findMin(this);
+		return findMin(root);
 	}
 
-	private E findMin(BinaryTree<E> root){
-		if(root.getLeftSubtree() == null){
-			return root.getData();
+	private E findMin(Node<E> root){
+		if(root.left == null){
+			return root.data;
 		}else{
-			return findMin(root.getLeftSubtree());
+			return findMin(root.left);
 		}
 	}
 
@@ -399,14 +417,17 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return the largest item or null if the tree is empty.
 	 */
 	public E findMax() {
-		return findMax(this);
+		return findMax(root);
 	}
 
-	private E findMax(BinaryTree<E> root){
-		if(root.getRightSubtree() == null){
-			return root.getData();
+	private E findMax(Node<E> root){
+		if(root == null){
+			return null;
+		}
+		else if(root.right == null){
+			return root.data;
 		}else{
-			return findMax(root.getRightSubtree());
+			return findMax(root.right);
 		}
 	}
 	
@@ -422,8 +443,7 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a parenthesized string representing structure of BST tree
 	 */
 	public String toString( ) { 
-		//TODO 
-		throw new UnsupportedOperationException();
+		return inorder();
 	}
 
 	/**
@@ -434,10 +454,26 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 *             if the tree is empty
 	 */
 	public boolean removeMin() {
-		return removeMin(this);
+		return removeMin(root);
 	}
 
-	private boolean removeMin(BinaryTree<E> root){
+	private boolean removeMin(Node<E> root){
+		if(root == null){
+			throw new NoSuchElementException();
+		}
+		
+		//base case for removing the main root making its right branch the new root
+		if (root.left == null){
+			this.root = root.right;
+			return true;
+		}
+		else if(root.left.left == null){
+			root.left = root.left.right;
+			return true;
+		}
+		else{
+			removeMin(root.left);
+		}
 		return false;
 	}
 
@@ -449,8 +485,27 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 *             if the tree is empty
 	 */
 	public boolean removeMax() {
-		//TODO
-		throw new UnsupportedOperationException();
+		return removeMax(root);
+	}
+	
+	private boolean removeMax(Node<E> root){
+		if(root == null){
+			throw new NoSuchElementException();
+		}
+
+		//base case for removing the main root making its left branch the new root
+		if(root.right == null){
+			this.root = root.left;
+			return true;
+		}
+		else if(root.right.right == null){
+			root.right = root.right.left;
+			return true;
+		}
+		else{
+			removeMax(root.right);
+		}
+		return false;
 	}
 
 

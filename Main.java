@@ -5,9 +5,18 @@ public class Main {
         for(int s : array){
             myTree.add(s);
         }
+        // myTree.add(10);
+        // myTree.add(5);
+        // myTree.add(13);
+        // myTree.add(3);
+        // myTree.add(7);
+        // myTree.add(11);
+        // myTree.add(15);
+        // myTree.add(4);
 
+        // System.out.println(myTree.inorder());
+        // System.out.println(myTree.preorder()); 
+        // System.out.println(myTree.postorder());
         System.out.println(myTree.inorder());
-        System.out.println(myTree.preorder()); 
-        System.out.println(myTree.postorder());
     }    
 }
