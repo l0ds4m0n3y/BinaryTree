@@ -421,9 +421,20 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * 
 	 * @return a parenthesized string representing structure of BST tree
 	 */
-	public String toString( ) { 
-		//TODO 
-		throw new UnsupportedOperationException();
+	public String toString(){
+		return toString(root, "");
+	}
+	
+	private String toString(Node<E> root, String s) { 
+		if(root == null){
+			return "";
+		} else{
+			String left = "(" + toString(root.left, s);
+			String current = root.toString();
+			String right = toString(root.right, s) + ")";
+
+			return left + current + right;
+		}
 	}
 
 	/**
