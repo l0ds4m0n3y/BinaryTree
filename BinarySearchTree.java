@@ -1,6 +1,13 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+
+import org.junit.runner.manipulation.Alphanumeric;
 
 /**
  * A class to represent a binary search tree.
@@ -238,6 +245,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return size(root);
 	}
 
+	/**
+	 * Recursive helper method for counting the number of nodes in the tree.
+	 * 
+	 * @param root
+	 * @return
+	 */
 	private int size(Node<E> root){
 		if(root == null){
 			return 0;
@@ -257,6 +270,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return interiorNodes(root);
 	}
 
+	/**
+	 * Recursive helper method for finding the nodes that 
+	 * have at least one child.
+	 * 
+	 * @param root
+	 * @return the number of interior nodes in the tree
+	 */
 	private int interiorNodes(Node<E> root){
 		if(root == null || (root.left == null && root.right == null)){
 			return 0;
@@ -276,6 +296,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return leaves(root);
 	}
 
+	/**
+	 * Recursive helper method for counting the leaves in 
+	 * a tree. If a node does not have any children then it
+	 * is a leaf. 
+	 * @param root
+	 * @return the number of leaves in the tree. 
+	 */
 	private int leaves(Node<E> root){
 		if(root == null){
 			return 0;
@@ -297,6 +324,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return height(root);
 	}
 
+	/**
+	 * Recursive helper method for finding the height of a tree. It compares the
+	 * two branches of the tree and returns the largest.
+	 * @param root
+	 * @return
+	 */
 	private int height(Node<E> root){
 		if(root == null){
 			return 0;
@@ -314,6 +347,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return preorder(root);
 	}
 
+	/**
+	 * Recursive helper method for returning a string with a preorder traveral of
+	 * the tree. 
+	 * @param root
+	 * @return a String with a preorder traversal of the tree.
+	 */
 	private String preorder(Node<E> root){
 		if(root == null){
 			return "";
@@ -336,6 +375,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return inorder(root);
 	}
 
+	/**
+	 * Recursive helper method for returning a string with a inorder traveral of
+	 * the tree. 
+	 * @param root
+	 * @return a String with a inorder traversal of the tree.
+	 */
 	public String inorder(Node<E> root){
 		if(root == null){
 			return "";
@@ -357,6 +402,12 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return postorder(root);
 	}
 
+	/**
+	 * Recursive helper method for returning a string with a postorder traveral of
+	 * the tree. 
+	 * @param root
+	 * @return a String with a postorder traversal of the tree.
+	 */
 	private String postorder(Node<E> root){
 		if(root == null){
 			return "";
@@ -375,23 +426,50 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 	 * @return a String with a breadth-first order traversal of the tree
 	 */
 	public String breadthFirstOrder() {
-		Queue<Node<E>> myQueue = new LinkedList<>();
 		String output = "";
-		myQueue.offer(root);
-		while(!myQueue.isEmpty()){
-			Node<E> current = myQueue.poll();
-			output += current.toString() + " ";
-			if(current.left != null)
-				myQueue.offer(current.left);
-			if(current.right != null)
-				myQueue.offer(current.right);
+
+		// Using a queue
+		// Queue<Node<E>> myQueue = new LinkedList<>();
+		// myQueue.offer(root);
+		// while(!myQueue.isEmpty()){
+		// 	Node<E> current = myQueue.poll();
+		// 	output += current.toString() + " ";
+		// 	if(current.left != null)
+		// 		myQueue.offer(current.left);
+		// 	if(current.right != null)
+		// 		myQueue.offer(current.right);
+		// }
+		// return output;
+
+		for(int i = 1; i <= height(); i++){
+			output += breadthFirstOrder(root, i);
 		}
 		return output;
-	}
 
-	private String breadthFirstOrder(Node<E> root){
-		int height = height();
-		return "";
+	}
+	/**
+	 * recursive helper method for returning the level order traversal of a tree.
+	 * This would have been easier using a queue. It returns all the elements in a
+	 * level by traversing level by level downwards. 
+	 * @param root
+	 * @param level
+	 * @return a String with all the elements in the level
+	 */
+	private String breadthFirstOrder(Node<E> root, int level){
+		StringBuilder output = new StringBuilder();
+
+        if (root == null) {
+            return output.toString();
+        }
+
+        if (level == 1) {
+            output.append(root.data);
+			output.append(" ");
+        } else if (level > 1) {
+            output.append(breadthFirstOrder(root.left, level - 1));
+            output.append(breadthFirstOrder(root.right, level - 1));
+        }
+        return output.toString();
 	}
 	
 	/**
@@ -403,6 +481,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return findMin(root);
 	}
 
+	/**
+	 * Recursive helper method for finding the smallest element in the tree by 
+	 * traversing to its rightmost child.
+	 * 
+	 * @param root
+	 * @return the smallest item or null if the tree is empty.
+	 */
 	private E findMin(Node<E> root){
 		if(root.left == null){
 			return root.data;
@@ -420,6 +505,13 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return findMax(root);
 	}
 
+	/**
+	 * Recursive helper method for finding the largest element in the tree by 
+	 * traversing to its leftmost child.
+	 * 
+	 * @param root
+	 * @return the largest item or null if the tree is empty.
+	 */
 	private E findMax(Node<E> root){
 		if(root == null){
 			return null;
@@ -446,15 +538,31 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return toString(root, "");
 	}
 	
+	/**
+	 * Recursive helper method for returning a parenthesized String representing 
+	 * the structure of the Binary Search Tree.  The String produced will have the 
+	 * following structure: "((L)N(R))" where L is the left subtree, R is the right 
+	 * subtree and N is the root of the subtree.  For example, if L has one child on 
+	 * the left and R has two children, then the string would be "(((LL)L)N((RL)R(RR)))",
+	 * where LL is L's left child and RL and RR are the left and right children of R.
+	 * 
+	 * @param root
+	 * @param s
+	 * @return the parenthesized string representing structure of the BTS tree.
+	 */
 	private String toString(Node<E> root, String s) { 
+		StringBuilder str = new StringBuilder();
 		if(root == null){
-			return "";
+			str.append("");
+			return str.toString();
 		} else{
-			String left = "(" + toString(root.left, s);
-			String current = root.toString();
-			String right = toString(root.right, s) + ")";
+			str.append("(");
+			str.append(toString(root.left, s));
+			str.append(root.toString());
+			str.append(toString(root.right, s));
+			str.append(")");
 
-			return left + current + right;
+			return str.toString();
 		}
 	}
 
@@ -469,6 +577,17 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return removeMin(root);
 	}
 
+	/**
+	 * Recursive helper method for removing the minimum element from the tree. First it 
+	 * finds the minimum element by traversing the tree to the left, if its found it is
+	 * replaced by its right child (which can also be null). It also works if the minimum 
+	 * element is the root of the whole tree. 
+	 * 
+	 * @param root
+	 * @return true if the minimum element is removed; false otherwise
+	 * @throws NoSuchElementException
+	 *             if the tree is empty
+	 */
 	private boolean removeMin(Node<E> root){
 		if(root == null){
 			throw new NoSuchElementException();
@@ -500,6 +619,17 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 		return removeMax(root);
 	}
 	
+	/**
+	 * Recursive helper method for removing the largest element from the tree. First it 
+	 * finds the largest element by traversing the tree to the right, if its found it is
+	 * replaced by its left child (which can be null). It also works if the largest element 
+	 * is the root of the whole tree. 
+	 * 
+	 * @param root
+	 * @return true if the largest element is removed; false otherwise
+	 * @throws NoSuchElementException
+	 *             if the tree is empty
+	 */
 	private boolean removeMax(Node<E> root){
 		if(root == null){
 			throw new NoSuchElementException();
@@ -518,6 +648,42 @@ public class BinarySearchTree<E extends Comparable<E>> extends BinaryTree<E>
 			removeMax(root.right);
 		}
 		return false;
+	}
+
+	/**
+	 * This method adds everything from the tree to a list in decending order whilst
+	 * emptying the tree. This method then calls its recursive helper method to shrink
+	 * the size of the tree by blancing it with its middle values. 
+	 */
+	public void balance(){
+		List<E> myList = new ArrayList<>();
+		while(root != null){
+			myList.add(findMax());
+			removeMax();
+		}
+
+		balance(myList, 0, myList.size() - 1);
+	}
+
+	/**
+	 * recursive helper method that balances the tree using an algorith similar to that
+	 * of binary search to shorten the tree's height
+	 * @before
+	 * (1((2)3((4)5((6)7))))
+	 * @after
+	 * (((1)2(3))4((5)6(7)))
+	 */
+	private void balance(List<E> list, int start, int end){
+		if (end < start){
+			return;
+		}
+
+		int index = start + (end - start) / 2;
+		E obj = list.get(index);
+		add(obj);
+		
+		balance(list, index + 1, end);
+		balance(list, start, index - 1);
 	}
 
 
